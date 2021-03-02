@@ -18,7 +18,7 @@
 
 <body>
 
-  <!-- Start of  page ------------------------------------------------------------------>
+  <!-- Home page ------------------------------------------------------------------>
   <div data-role="page" id="home">
 
     <!--   page header -->
@@ -26,14 +26,13 @@
       <h1>Fetch!</h1>
       <div data-role="navbar" data-theme='b'>
         <ul>
-        
-          <li><a href="#Load">Add Movie</a></li>
-          <li><a href="#ListAll">List All Movies</a></li>
-          <li><a href="#ListSome">List Movies by Genre</a></li>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#AddWalker">Add Walker</a></li>
+          <li><a href="#ListAll">List My Walkers</a></li>
         </ul>
       </div><!-- /navbar -->
       <div class="myHeader">The website devoted to recording your dog walkers</div>
-      <img class="center" id="image1" src="./images/movieReels.jpg" alt="picture of movie reeels" class="center" >
+      <img class="center" id="image1" src="./images/movieReels.jpg" alt="picture of movie reeels" class="center">
     </div>
 
     <!--   page content -->
@@ -45,78 +44,84 @@
 
     <!--  page footer -->
     <div data-role="footer" data-theme='b'>
-      <h1>Copyrigtht 2021 by Kurt Friedrich</h1>
+      <h1>Copyright 2021 by Rylan Portmanteau</h1>
     </div>
   </div>
-  <!-- End of  page ------------------------------------------------------------------>
+  <!-- End of Home page ------------------------------------------------------------------>
 
 
 
 
 
-  <div data-role="page" id="Load">
+  <!-- Add a Walker Page ------------------>
+  <div data-role="page" id="AddWalker">
     <!--  page header -->
     <div data-role="header" data-theme='a'>
-      <h1>Add a Movie</h1>
+      <h1>Add a Walker</h1>
       <div data-role="navbar" data-theme='b'>
         <ul>
           <li><a href="#home">Home Page</a></li>
-         
-        <li><a href="#ListAll">List All Movies</a></li>
-        <li><a href="#ListSome">List Movies by Genre</a></li>
+          <li><a href="#AddWalker">Add a Walker</a></li>
+          <li><a href="#List">View List</a></li>
         </ul>
       </div><!-- /navbar -->
-      <div class="myHeader">Your site to organize your favorite movies.</div>
-      <img class="center" id="image1" src="./images/movieReels.jpg" alt="picture of movie reeels" class="center">
+      <div class="myHeader">The website devoted to recording your dog walkers.</div>
     </div>
 
 
 
 
     <!-- page content -->
-  
+
     <div data-role="content" data-theme='c'>
-      <h2>Enter a new Movie</h2>
-      Enter movie name <br />
-      <input type="text" value="" id="title" />
-      Enter year released <br />
-      <input type="text" value="" id="year" />
-      Enter leading man <br />
-      <input type="text" value="" id="man" />
-      Enter leading woman <br />
-      <input type="text" value="" id="woman" />
-      Enter YouTube Trailer URL <br />
-      <input type="text" value="" id="URL" />
+      <h2>Enter Dog Walker Information</h2>
+      First Name <br />
+      <input type="text" value="" id="fname" />
+      Last Name <br />
+      <input type="text" value="" id="lname" />
+      Email <br />
+      <input type="email" value="" id="email" />
+      Phone <br />
+      <input type="tel" value="" id="phone" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" />
+      Experience? <br />
+      <input type="text" value="" id="experience" />
       
-        <div class="ui-field-contain">
-          <label for="select-genre">Select a Genre</label>
-          <select name="select-genre" id="select-genre">
-            <option value="Action">Action</option>
-            <option value="Comedy">Comedy</option>
-            <option value="Drama">Drama</option>
-            <option value="Horror">Horror</option>
-            <option value="SciFi">SciFi</option>
-            <option value="Musical">Musical</option>
-            <option value="Western">Western</option>
-          </select>
-        </div>
-    
-    
-      <input type="button" value="Click To Add Movie" id="buttonAdd" data-inline="true" />
-      <input type="button" value="Clear Data" id="buttonClear" data-inline="true" />
+      Days available <br />
+      <form>
+        <br>
+        <input type="checkbox" id="monday" name="monday" value="Monday">
+        <label for="monday">Monday</label><br>
+        <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday">
+        <label for="tuesday">Tuesday</label><br>
+        <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday">
+        <label for="wednesday">Wednesday</label><br>
+        <input type="checkbox" id="thursday" name="thursday" value="Thursday">
+        <label for="thursday">Thursday</label><br>
+        <input type="checkbox" id="friday" name="friday" value="Friday">
+        <label for="friday">Friday</label><br>
+        <input type="checkbox" id="saturday" name="saturday" value="Saturday">
+        <label for="saturday">Saturday</label><br>
+        <input type="checkbox" id="sunday" name="sunday" value="Sunday">
+        <label for="sunday">Sunday</label><br>
+      </form>
+
+      <!-- Buttons don't work yet ------>
+      <input type="button" value="Add Walker" id="buttonAdd" data-inline="true" />
+      <input type="button" value="Clear" id="buttonClear" data-inline="true" />
     </div>
 
-       
-    
+
+
     <!--   page footer -->
     <div data-role="footer" data-theme='b'>
-      <h1>Copyrigtht 2021 by Kurt Friedrich</h1>
+      <h1>Copyright 2021 by Rylan Portmanteau</h1>
     </div>
   </div>
-  <!-- End of  page ------------------------------------------------------------------>
+  <!-- End of Add a Walker page ------------------------------------------------------------------>
 
 
 
+  <!-- List My Walkers Page ------------------->
   <div data-role="page" id="ListAll">
     <!--   page header -->
     <div data-role="header" data-theme='a'>
@@ -125,9 +130,9 @@
         <ul>
           <li><a href="#home">Home Page</a></li>
           <li><a href="#Load">Add Movie</a></li>
-       
-        <li><a href="#ListSome">List Movies by Genre</a></li>
-         
+
+          <li><a href="#ListSome">List Movies by Genre</a></li>
+
         </ul>
       </div><!-- /navbar -->
       <div class="myHeader">Your site to organize your favorite movies.</div>
@@ -144,91 +149,51 @@
 
     <!--   page footer -->
     <div data-role="footer" data-theme='b'>
-      <h1>Copyrigtht 2021 by Kurt Friedrich</h1>
+      <h1>Copyright 2021 by Rylan Portmanteau</h1>
     </div>
   </div>
   </div>
-  <!-- End of  page ------------------------------------------------------------------>
+  <!-- End of List My Walkers page ------------------------------------------------------------------>
 
 
-  <!-- Start of  page -->
-  <div data-role="page" id="details">
-  
+  <!-- Start of WalkerInformation page -->
+  <div data-role="page" id="WalkerInformation">
+
     <!--   page header -->
     <div data-role="header" data-theme='a'>
-      <h1>My Movies</h1>
+      <h1>My Walkers</h1>
       <div data-role="navbar" data-theme='b'>
         <ul>
-          <li><a href="#home">Home Page</a></li>
-          <li><a href="#Load">Add Movie</a></li>
-          <li><a href="#ListAll">List All Movies</a></li>
-          <li><a href="#ListSome">List Movies by Genre</a></li>
-  
+          <li><a href="#home">Home</a></li>
+          <li><a href="#AddWalker">Add Walker</a></li>
+          <li><a href="#List">View List</a></li>
+
         </ul>
       </div><!-- /navbar -->
-            <div class="myHeader">Your site to organize your favorite movies.</div>
-            <img class="center" id="image1" src="./images/movieReels.jpg" alt="picture of movie reeels" class="center">
+      <div class="myHeader">The website devoted to recording your dog walkers.</div>
     </div>
-  
+
     <!--  content -->
     <div data-role="content" data-theme='c'>
-      <p> Here are the details</p>
-      <p id="oneTitle"></p>
-      <p id="oneYear"></p>
-      <p id="oneGenre"></p>
-      <p id="oneWoman"></p>
-      <p id="oneMan"></p>
-      <p id="oneURL" hidden></p>
-      <input type="button" value="Trailer" id="trailer" />
+      <p>Dog Walker Information:</p><br>
+      <p>Name: John Doe</p>
+      <p>Email: jdoe@fake.com</p>
+      <p>Phone: 1234567890</p>
+      <p>Experience: Yes, a little.</p>
+      <p>Days available: Monday, Friday</p>
     </div>
-    <input type="button" value="Delete" id="delete" style="background: rgb(216, 11, 11)"/>
+    <input type="button" value="Delete" id="delete" style="background: rgb(216, 11, 11)" />
 
-    
-  
+
+
     <!--    footer -->
     <div data-role="footer" data-theme='b'>
-      <h1>Copyrigtht 2021 by Kurt Friedrich</h1>
+      <h1>Copyright 2021 by Rylan Portmanteau</h1>
     </div>
-  
+
   </div>
+  <!-- End of WalkerInformation page ---------->
 
-
-
-  <div data-role="page" id="ListSome">
-    <!--   page header -->
-    <div data-role="header" data-theme='a'>
-      <h1>Movie List By Genre</h1>
-      <div data-role="navbar" data-theme='b'>
-        <ul>
-          <li><a href="#home">Home Page</a></li>
-          <li><a href="#Load">Add Movie</a></li>
-          <li><a href="#ListAll">List All Movies</a></li>
-         
-        </ul>
-      </div><!-- /navbar -->
-        <div class="myHeader">Your site to organize your favorite movies.</div>
-        <img class="center" id="image1" src="./images/movieReels.jpg" alt="picture of movie reeels" class="center">
-    </div>
-    <!--   page content -->
-    <div data-role="content" data-theme='e'>
-      <p> Here are my Movies in that Genre</p>
-      <div id="divMovieListSubset"></div>
-      <input type="button" value="Show just Comedy" id="buttonSortComedy" data-inline="true" />
-      <input type="button" value="Show just Drama" id="buttonSortDrama" data-inline="true" />
-    </div>
-  
-  
-    <!--   page footer -->
-    <div data-role="footer" data-theme='b'>
-      <h1>Copyrigtht 2021 by Kurt Friedrich</h1>
-    </div>
-  </div>
-  </div>
-  <!-- End of  page ------------------------------------------------------------------>
-
-
-
-  <p id="IDparmHere" hidden>change1</p>  <!--hidden, a place to stash the user ID -->
 </body>
 
 </html>
