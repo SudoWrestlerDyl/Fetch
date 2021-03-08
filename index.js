@@ -1,30 +1,17 @@
 // start by creating data so we don't have to type it in each time
-let movieArray = [];
+let myWalkers = [];
 
 // define a constructor to create movie objects
-let MovieObject = function (pTitle, pYear, pGenre, pMan, pWoman, pURL) {
+let DogWalker = function (pFirst, pLast, pEmail, pPhone, pExperience, pDays) {
     this.ID = Math.random().toString(16).slice(5)  // tiny chance could get duplicates!
-    this.Title = pTitle;
-    this.Year = pYear;
-    this.Genre = pGenre;  // action  comedy  drama  horrow scifi  musical  western
-    this.Man = pMan;
-    this.Woman = pWoman;
-    this.URL = pURL;
+    this.FirstName = pFirst;
+    this.LastName = pLast;
+    this.Email = pEmail;
+    this.Phone = pPhone;
+    this.Experience = pExperience;
+    this.Days = pDays; //Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
 }
 
-
-movieArray.push(new MovieObject("Moonstruck", 1981, "Drama", "Nicholas Cage", "Cher", "https://www.youtube.com/watch?v=M01_2CKL6PU"));
-movieArray.push(new MovieObject("Wild At Heart", 1982, "Drama", "Nicholas Cage", "Laura VanDern", "https://www.youtube.com/watch?v=7uRJartX79Q"));
-movieArray.push(new MovieObject("Raising Arizona", 1983, "Comedy", "Nicholas Cage", "Holly Hunter", "https://www.youtube.com/watch?v=NoXJKArYi1g"));
-movieArray.push(new MovieObject("USS Indianapolis: Men of Courage", 2016, "Drama", "Nicholas Cage", "Emily Tennant", "https://youtu.be/ZDPE-NronKk"));
-movieArray.push(new MovieObject("Marsstruck", 1983, "Drama", "Nicholas Cage", "Cher", "https://www.youtube.com/watch?v=M01_2CKL6PU"));
-movieArray.push(new MovieObject("Marsstruck", 1984, "Comedy", "Nicholas Cage", "Cher", "https://www.youtube.com/watch?v=M01_2CKL6PU"));
-movieArray.push(new MovieObject("Jupiterstruck", 1985, "Drama", "Nicholas Cage", "Cher", "https://www.youtube.com/watch?v=M01_2CKL6PU"));
-movieArray.push(new MovieObject("Saturnstruck", 1986, "Comedy", "Nicholas Cage", "Cher", "https://www.youtube.com/watch?v=M01_2CKL6PU"));
-
-
-
-let selectedGenre = "not selected";
 
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -33,10 +20,11 @@ document.addEventListener("DOMContentLoaded", function () {
 // add button events ************************************************************************
     
     document.getElementById("buttonAdd").addEventListener("click", function () {
-        movieArray.push(new MovieObject(document.getElementById("title").value, document.getElementById("year").value,
-            selectedGenre, document.getElementById("man").value, document.getElementById("woman").value));
+        myWalkers.push(new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
+        document.getElementById("email").value, document.getElementById("phone"),
+        document.getElementById("experience").value, DaysAvailableToText()
+        ));
         document.location.href = "index.html#ListAll";
-        // also add the URL value
     });
     
     document.getElementById("buttonClear").addEventListener("click", function () {
@@ -124,6 +112,62 @@ document.addEventListener("DOMContentLoaded", function () {
 // next 2 functions could be combined into 1 with a little work
 // such as I could pass in a variable which said which divMovieList div it should draw
 // to, and if no value is passed in to subset too, I could just include all.
+
+// Dylan: I created a function to determine what days the user selected.
+// For the Add a Walker page!
+
+function DaysAvailableToText() {
+    var monday = document.getElementById("monday").checked;
+    var tuesday = document.getElementById("tuesday").checked;
+    var wednesday = document.getElementById("wednesday").checked;
+    var thursday = document.getElementById("thursday").checked;
+    var friday = document.getElementById("friday").checked;
+    var saturday = document.getElementById("satursday").checked;
+    var sunday = document.getElementById("sunday").checked;
+    
+    availableText = "";
+
+    if (monday)
+    {
+        availableText = "Monday, ";
+    }
+    else if (tuesday)
+    {
+        availableText = availableText + "Tuesday, ";
+    }
+    else if (wednesday)
+    {
+        availableText = availableText + "Wednesday, ";
+    }
+    else if (thursday)
+    {
+        availableText = availableText + "Thursday, ";
+    }
+    else if (friday)
+    {
+        availableText = availableText + "Friday, ";
+    }
+    else if (saturday)
+    {
+        availableText = availableText + "Saturday, ";
+    }
+    else if (sunday)
+    {
+        availableText = availableText + "Sunday, ";
+    }
+
+
+    if (availableText == "")
+    {
+        finishedText = "[No days selected]";
+        return finishedText;
+    }
+    else
+    {
+        finishedText = availableText.slice(0, -2) // to get rid of ', '
+        return finishedText;
+    }
+};
 
 function createList() {
     // clear prior data
