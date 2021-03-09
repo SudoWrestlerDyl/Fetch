@@ -63,7 +63,7 @@
       <h1>Add a Walker</h1>
       <div data-role="navbar" data-theme='b'>
         <ul>
-          <li><a href="#home">Home Page</a></li>
+          <li><a href="#home">Home</a></li>
           <li><a href="#AddWalker">Add a Walker</a></li>
           <li><a href="#ListAll">List Dog Walkers</a></li>
         </ul>
@@ -90,7 +90,7 @@
       <input type="text" value="" id="experience" />
       
       Days available <br />
-      <form>
+      <form id="daysForm">
         <br>
         <input type="checkbox" id="monday" name="monday" value="Monday">
         <label for="monday">Monday</label><br>
@@ -164,7 +164,7 @@
   <!-- End of List My Walkers page ------------------------------------------------------------------>
 
 
-  <!-- Start of WalkerInformation page -->
+  <!-- Start of WalkerInformation page - Dylan -->
   <div data-role="page" id="WalkerInformation">
 
     <!--   page header -->
@@ -184,11 +184,11 @@
     <!--  content -->
     <div data-role="content" data-theme='c'>
       <p>Dog Walker Information:</p><br>
-      <p>Name: John Doe</p>
-      <p>Email: jdoe@fake.com</p>
-      <p>Phone: 1234567890</p>
-      <p>Experience: Yes, a little.</p>
-      <p>Days available: Monday, Friday</p>
+      <p id="oneName"></p>
+      <p id="oneEmail"></p>
+      <p id="onePhone"></p>
+      <p id="oneExperience"></p>
+      <p id="oneDays"></p>
     </div>
     <input type="button" value="Delete" id="delete" style="background: rgb(216, 11, 11)" />
 
@@ -202,6 +202,7 @@
   </div>
   <!-- End of WalkerInformation page ---------->
 
+  <p id="IDparmHere" hidden>change1</p>  <!--hidden, a place to stash the user ID -->
 </body>
 
 </html>

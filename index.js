@@ -20,59 +20,49 @@ document.addEventListener("DOMContentLoaded", function () {
 // add button events ************************************************************************
     
     document.getElementById("buttonAdd").addEventListener("click", function () {
-        myWalkers.push(new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
-        document.getElementById("email").value, document.getElementById("phone"),
-        document.getElementById("experience").value, DaysAvailableToText()
-        ));
-        document.location.href = "index.html#ListAll";
+        var firstName = document.getElementById("fname").value;
+        var lastName = document.getElementById("lname").value;
+        var emailAddress = document.getElementById("email").value;
+        var phoneNumber = document.getElementById("phone").value;
+        var experience = document.getElementById("experience").value;
+        var daysAvailable = DaysAvailableToText();
+        if (firstName != "" && lastName != "" && emailAddress != "" && phoneNumber != "" && experience != "" && daysAvailable != "")
+        {
+            myWalkers.push(new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
+            document.getElementById("email").value, document.getElementById("phone"),
+            document.getElementById("experience").value, DaysAvailableToText()
+            ));
+            document.location.href = "index.html#ListAll";
+
+            alert(firstName + " " + lastName + " has been added!");
+
+            // Erases information
+            document.getElementById("fname").value = "";
+            document.getElementById("lname").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("experience").value = "";
+            document.getElementById("daysForm").reset();
+        }
+        else
+        {
+            alert("Please completely fill out the form.");
+        }
     });
     
     document.getElementById("buttonClear").addEventListener("click", function () {
-        document.getElementById("title").value = "";
-        document.getElementById("year").value = "";
-        document.getElementById("man").value = "";
-        document.getElementById("woman").value = "";
-        document.getElementById("URL").value = "";
-    });
-
-    $(document).bind("change", "#select-genre", function (event, ui) {
-        selectedGenre = $('#select-genre').val();
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("experience").value = "";
+        document.getElementById("daysForm").reset();
     });
 
     document.getElementById("delete").addEventListener("click", function () {
         deleteMovie(document.getElementById("IDparmHere").innerHTML);
         createList();  // recreate li list after removing one
         document.location.href = "index.html#ListAll";  // go back to movie list 
-    });
-
-// 2 sort button event methods
-    document.getElementById("buttonSortTitle").addEventListener("click", function () {
-        movieArray.sort(dynamicSort("Title"));
-        createList();
-        document.location.href = "index.html#ListAll";
-    });
-
-    document.getElementById("buttonSortGenre").addEventListener("click", function () {
-        movieArray.sort(dynamicSort("Genre"));
-        createList();
-        document.location.href = "index.html#ListAll";
-    });
-
-    // button on details page to view the youtube video
-    document.getElementById("trailer").addEventListener("click", function () {
-        window.open(document.getElementById("oneURL").innerHTML);
-    });
-
-    document.getElementById("buttonSortComedy").addEventListener("click", function () {
-       
-        createListSubset("Comedy");  // recreate li list after removing one
-        //document.location.href = "index.html#ListSome";  // go back to movie list 
-    });
-
-    document.getElementById("buttonSortDrama").addEventListener("click", function () {
-       
-        createListSubset("Drama");  // recreate li list after removing one
-        //document.location.href = "index.html#ListSome";  // go back to movie list 
     });
 // end of add button events ************************************************************************
 
@@ -84,24 +74,15 @@ document.addEventListener("DOMContentLoaded", function () {
         createList();
     });
 
-    $(document).on("pagebeforeshow", "#ListSome", function (event) {   // have to use jQuery 
-        // clear prior data
-        var divMovieList = document.getElementById("divMovieListSubset");
-        while (divMovieList.firstChild) {    // remove any old data so don't get duplicates
-            divMovieList.removeChild(divMovieList.firstChild);
-        };
-    });
-
-    // need one for our details page to fill in the info based on the passed in ID
-    $(document).on("pagebeforeshow", "#details", function (event) {   // have to use jQuery 
+    // need one for our WalkerInformation page to fill in the info based on the passed in ID
+    $(document).on("pagebeforeshow", "#WalkerInformation", function (event) {   // have to use jQuery 
         let localID = document.getElementById("IDparmHere").innerHTML;
         let arrayPointer = GetArrayPointer(localID);
-        document.getElementById("oneTitle").innerHTML = "The title is: " + movieArray[arrayPointer].Title;
-        document.getElementById("oneYear").innerHTML = "Year released: " + movieArray[arrayPointer].Year;
-        document.getElementById("oneGenre").innerHTML = "Genre: " + movieArray[arrayPointer].Genre;
-        document.getElementById("oneWoman").innerHTML = "Leading Woman: " + movieArray[arrayPointer].Woman;
-        document.getElementById("oneMan").innerHTML = "Leading Man: " + movieArray[arrayPointer].Man;
-        document.getElementById("oneURL").innerHTML = movieArray[arrayPointer].URL;
+        document.getElementById("oneName").innerHTML = "Name: " + movieArray[arrayPointer].FirstName + " " + movieArray[arrayPointer].LastName;
+        document.getElementById("oneEmail").innerHTML = "Email: " + movieArray[arrayPointer].Email;
+        document.getElementById("onePhone").innerHTML = "Phone number: " + movieArray[arrayPointer].Phone;
+        document.getElementById("oneExperience").innerHTML = "Experience: " + movieArray[arrayPointer].Experience;
+        document.getElementById("oneDays").innerHTML = "Days available: " + movieArray[arrayPointer].Days;
     });
  
 // end of page before show code *************************************************************************
@@ -110,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // end of wait until document has loaded event  *************************************************************************
 
 // next 2 functions could be combined into 1 with a little work
-// such as I could pass in a variable which said which divMovieList div it should draw
+// such as I could pass in a variable which said which divDogWalkers div it should draw
 // to, and if no value is passed in to subset too, I could just include all.
 
 // Dylan: I created a function to determine what days the user selected.
@@ -122,7 +103,7 @@ function DaysAvailableToText() {
     var wednesday = document.getElementById("wednesday").checked;
     var thursday = document.getElementById("thursday").checked;
     var friday = document.getElementById("friday").checked;
-    var saturday = document.getElementById("satursday").checked;
+    var saturday = document.getElementById("saturday").checked;
     var sunday = document.getElementById("sunday").checked;
     
     availableText = "";
@@ -159,8 +140,7 @@ function DaysAvailableToText() {
 
     if (availableText == "")
     {
-        finishedText = "[No days selected]";
-        return finishedText;
+        return availableText;
     }
     else
     {
@@ -171,24 +151,24 @@ function DaysAvailableToText() {
 
 function createList() {
     // clear prior data
-    var divMovieList = document.getElementById("divMovieList");
-    while (divMovieList.firstChild) {    // remove any old data so don't get duplicates
-        divMovieList.removeChild(divMovieList.firstChild);
+    var divDogWalkers = document.getElementById("divWalkerList");
+    while (divDogWalkers.firstChild) {    // remove any old data so don't get duplicates
+        divDogWalkers.removeChild(divDogWalkers.firstChild);
     };
 
     var ul = document.createElement('ul');
 
-    movieArray.forEach(function (element,) {   // use handy array forEach method
+    myWalkers.forEach(function (element,) {   // use handy array forEach method
         var li = document.createElement('li');
         // adding a class name to each one as a way of creating a collection
-        li.classList.add('oneMovie'); 
+        li.classList.add('oneWalker'); 
         // use the html5 "data-parm" to encode the ID of this particular data object
         // that we are building an li from
         li.setAttribute("data-parm", element.ID);
-        li.innerHTML = element.ID + ":  " + element.Title + "  " + element.Genre;
+        li.innerHTML = element.FirstName + " " + element.LastName + ". Experience: " + element.Experience + ". Available: " + element.Days;
         ul.appendChild(li);
     });
-    divMovieList.appendChild(ul)
+    divDogWalkers.appendChild(ul)
 
     // now we have the HTML done to display out list, 
     // next we make them active buttons
@@ -201,7 +181,7 @@ function createList() {
         // get our hidden <p> and write THIS ID value there
         document.getElementById("IDparmHere").innerHTML = parm;
         // now jump to our page that will use that one item
-        document.location.href = "index.html#details";
+        document.location.href = "index.html#ListAll";
         });
     });
 
@@ -259,7 +239,7 @@ function createListSubset(whichType) {
             // get our hidden <p> and write THIS ID value there
             document.getElementById("IDparmHere").innerHTML = parm;
             // now jump to our page that will use that one item
-            document.location.href = "index.html#details";
+            document.location.href = "index.html#ListAll";
         });
     });
 
