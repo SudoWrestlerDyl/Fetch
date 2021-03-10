@@ -1,7 +1,7 @@
 // start by creating data so we don't have to type it in each time
 let myWalkers = [];
 
-// define a constructor to create movie objects
+// define a constructor to create Walker objects
 let DogWalker = function (pFirst, pLast, pEmail, pPhone, pExperience, pDays) {
     this.ID = Math.random().toString(16).slice(5)  // tiny chance could get duplicates!
     this.FirstName = pFirst;
@@ -25,18 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
         var emailAddress = document.getElementById("email").value;
         var phoneNumber = document.getElementById("phone").value;
         var experience = document.getElementById("experience").value;
-        var daysAvailable = DaysAvailableToText();
+        var daysAvailable = DaysAvailableToText()
         if (firstName != "" && lastName != "" && emailAddress != "" && phoneNumber != "" && experience != "" && daysAvailable != "")
         {
             myWalkers.push(new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
-            document.getElementById("email").value, document.getElementById("phone"),
+            document.getElementById("email").value, document.getElementById("phone").value,
             document.getElementById("experience").value, DaysAvailableToText()
             ));
             document.location.href = "index.html#ListAll";
 
             alert(firstName + " " + lastName + " has been added!");
 
-            // Erases information
+            // Clears information for next time you add a walker
             document.getElementById("fname").value = "";
             document.getElementById("lname").value = "";
             document.getElementById("email").value = "";
@@ -60,9 +60,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById("delete").addEventListener("click", function () {
-        deleteMovie(document.getElementById("IDparmHere").innerHTML);
+        deleteWalker(document.getElementById("IDparmHere").innerHTML);
         createList();  // recreate li list after removing one
-        document.location.href = "index.html#ListAll";  // go back to movie list 
+        document.location.href = "index.html#ListAll";  // go back to the walker list 
     });
 // end of add button events ************************************************************************
 
@@ -78,11 +78,11 @@ document.addEventListener("DOMContentLoaded", function () {
     $(document).on("pagebeforeshow", "#WalkerInformation", function (event) {   // have to use jQuery 
         let localID = document.getElementById("IDparmHere").innerHTML;
         let arrayPointer = GetArrayPointer(localID);
-        document.getElementById("oneName").innerHTML = "Name: " + movieArray[arrayPointer].FirstName + " " + movieArray[arrayPointer].LastName;
-        document.getElementById("oneEmail").innerHTML = "Email: " + movieArray[arrayPointer].Email;
-        document.getElementById("onePhone").innerHTML = "Phone number: " + movieArray[arrayPointer].Phone;
-        document.getElementById("oneExperience").innerHTML = "Experience: " + movieArray[arrayPointer].Experience;
-        document.getElementById("oneDays").innerHTML = "Days available: " + movieArray[arrayPointer].Days;
+        document.getElementById("oneName").innerHTML = "Name: " + myWalkers[arrayPointer].FirstName + " " + myWalkers[arrayPointer].LastName;
+        document.getElementById("oneEmail").innerHTML = "Email: " + myWalkers[arrayPointer].Email;
+        document.getElementById("onePhone").innerHTML = "Phone number: " + myWalkers[arrayPointer].Phone;
+        document.getElementById("oneExperience").innerHTML = "Experience: " + myWalkers[arrayPointer].Experience;
+        document.getElementById("oneDays").innerHTML = "Days available: " + myWalkers[arrayPointer].Days + ".";
     });
  
 // end of page before show code *************************************************************************
@@ -112,27 +112,27 @@ function DaysAvailableToText() {
     {
         availableText = "Monday, ";
     }
-    else if (tuesday)
+    if (tuesday)
     {
         availableText = availableText + "Tuesday, ";
     }
-    else if (wednesday)
+    if (wednesday)
     {
         availableText = availableText + "Wednesday, ";
     }
-    else if (thursday)
+    if (thursday)
     {
         availableText = availableText + "Thursday, ";
     }
-    else if (friday)
+    if (friday)
     {
         availableText = availableText + "Friday, ";
     }
-    else if (saturday)
+    if (saturday)
     {
         availableText = availableText + "Saturday, ";
     }
-    else if (sunday)
+    if (sunday)
     {
         availableText = availableText + "Sunday, ";
     }
@@ -151,9 +151,9 @@ function DaysAvailableToText() {
 
 function createList() {
     // clear prior data
-    var divDogWalkers = document.getElementById("divWalkerList");
-    while (divDogWalkers.firstChild) {    // remove any old data so don't get duplicates
-        divDogWalkers.removeChild(divDogWalkers.firstChild);
+    var divWalkerList = document.getElementById("divWalkerList");
+    while (divWalkerList.firstChild) {    // remove any old data so don't get duplicates
+        divWalkerList.removeChild(divWalkerList.firstChild);
     };
 
     var ul = document.createElement('ul');
@@ -165,15 +165,15 @@ function createList() {
         // use the html5 "data-parm" to encode the ID of this particular data object
         // that we are building an li from
         li.setAttribute("data-parm", element.ID);
-        li.innerHTML = element.FirstName + " " + element.LastName + ". Experience: " + element.Experience + ". Available: " + element.Days;
+        li.innerHTML = element.FirstName + " " + element.LastName + " | Experience: " + element.Experience + " | Available: " + element.Days + ".";
         ul.appendChild(li);
     });
-    divDogWalkers.appendChild(ul)
+    divWalkerList.appendChild(ul)
 
     // now we have the HTML done to display out list, 
     // next we make them active buttons
     // set up an event for each new li item, 
-    var liArray = document.getElementsByClassName("oneMovie");
+    var liArray = document.getElementsByClassName("oneWalker");
     Array.from(liArray).forEach(function (element) {
         element.addEventListener('click', function () {
         // get that data-parm we added for THIS particular li as we loop thru them
@@ -181,69 +181,27 @@ function createList() {
         // get our hidden <p> and write THIS ID value there
         document.getElementById("IDparmHere").innerHTML = parm;
         // now jump to our page that will use that one item
-        document.location.href = "index.html#ListAll";
+        document.location.href = "index.html#WalkerInformation";
         });
     });
 
 };
 
-function deleteMovie(which) {
+function deleteWalker(which) {
     console.log(which);
     let arrayPointer = GetArrayPointer(which);
-    movieArray.splice(arrayPointer, 1);  // remove 1 element at index 
+    myWalkers.splice(arrayPointer, 1);  // remove 1 element at index 
 }
 
 // cycles thru the array to find the array element with a matching ID
 function GetArrayPointer(localID) {
-    for (let i = 0; i < movieArray.length; i++) {
-        if (localID === movieArray[i].ID) {
+    for (let i = 0; i < myWalkers.length; i++) {
+        if (localID === myWalkers[i].ID) {
             return i;
         }
     }
 }
-  
 
-function createListSubset(whichType) {
-    // clear prior data
-    var divMovieList = document.getElementById("divMovieListSubset");
-    while (divMovieList.firstChild) {    // remove any old data so don't get duplicates
-        divMovieList.removeChild(divMovieList.firstChild);
-    };
-
-    var ul = document.createElement('ul');
-
-    movieArray.forEach(function (element,) {
-        
-        if (element.Genre === whichType) {
-            // use handy array forEach method
-            var li = document.createElement('li');
-            // adding a class name to each one as a way of creating a collection
-            li.classList.add('oneMovie');
-            // use the html5 "data-parm" to encode the ID of this particular data object
-            // that we are building an li from
-            li.setAttribute("data-parm", element.ID);
-            li.innerHTML = element.ID + ":  " + element.Title + "  " + element.Genre;
-            ul.appendChild(li);
-        }
-    });
-    divMovieList.appendChild(ul)
-
-    // now we have the HTML done to display out list, 
-    // next we make them active buttons
-    // set up an event for each new li item, 
-    var liArray = document.getElementsByClassName("oneMovie");
-    Array.from(liArray).forEach(function (element) {
-        element.addEventListener('click', function () {
-            // get that data-parm we added for THIS particular li as we loop thru them
-            var parm = this.getAttribute("data-parm");  // passing in the record.Id
-            // get our hidden <p> and write THIS ID value there
-            document.getElementById("IDparmHere").innerHTML = parm;
-            // now jump to our page that will use that one item
-            document.location.href = "index.html#ListAll";
-        });
-    });
-
-};
 
 /**
  *  https://ourcodeworld.com/articles/read/764/how-to-sort-alphabetically-an-array-of-objects-by-key-in-javascript
