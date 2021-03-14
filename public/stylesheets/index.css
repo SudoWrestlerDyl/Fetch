@@ -1,0 +1,30 @@
+h1 {
+  color: rgb(214, 202, 36);
+}
+
+li {
+  color: rgb(12, 145, 78);
+  font-size:      36px;
+  font-weight:    bold;
+}
+
+.myHeader {
+  text-align: center;
+  font-size:      42px;
+  font-weight:    bold;
+  color:  rgb(235, 193, 56);
+}
+
+.newFont {
+  text-align: center;
+  font-family: 'Nova Flat';font-size: 22px;
+  font-size:      40px;
+  font-weight:    bold;
+}
+
+.center {
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 25%;
+}
