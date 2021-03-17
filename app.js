@@ -11,6 +11,7 @@ var app = express();
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static('public'));
@@ -26,12 +27,8 @@ let DogWalker = function (pFirst, pLast, pEmail, pPhone, pExperience, pDays) {
     this.Phone = pPhone;
     this.Experience = pExperience;
     this.Days = pDays; //Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
-}
+};
 
-
-// just one "site" with 2 pages, / and about
-
-// use res.render to load up an ejs view file
 // index page 
 
 app.get('/', function(req, res) {
@@ -65,9 +62,6 @@ app.delete('/deleteWalker/:id', (req, res) => {
     }
     res.status(404);  // if not found
 });
-
-
-
 
 
 // error page 

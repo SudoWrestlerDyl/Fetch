@@ -10,7 +10,7 @@ let DogWalker = function (pFirst, pLast, pEmail, pPhone, pExperience, pDays) {
     this.Phone = pPhone;
     this.Experience = pExperience;
     this.Days = pDays; //Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday
-}
+};
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -28,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
         var daysAvailable = DaysAvailableToText()
         if (firstName != "" && lastName != "" && emailAddress != "" && phoneNumber != "" && experience != "" && daysAvailable != "")
         {
-            myWalkers.push(new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
+            let newWalker = new DogWalker(document.getElementById("fname").value, document.getElementById("lname").value,
             document.getElementById("email").value, document.getElementById("phone").value,
-            document.getElementById("experience").value, DaysAvailableToText()
-            ));
+            document.getElementById("experience").value, DaysAvailableToText());
+            addNewWalker(newWalker);
             document.location.href = "index.html#ListAll";
 
-            alert(firstName + " " + lastName + " has been added!");
+            //alert(firstName + " " + lastName + " has been added!");
 
             // Clears information for next time you add a walker
             document.getElementById("fname").value = "";
@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         else
         {
-            alert("Please completely fill out the form.");
+            alert("All fields must be filled in.");
         }
     });
     
@@ -71,7 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
 // page before show code *************************************************************************
     // page before show code *************************************************************************
     $(document).on("pagebeforeshow", "#ListAll", function (event) {   // have to use jQuery 
-        createList();
+        FillArrayFromServer();    // fill local array from server array
+        //createList();
     });
 
     // need one for our WalkerInformation page to fill in the info based on the passed in ID
@@ -83,6 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("onePhone").innerHTML = "Phone number: " + myWalkers[arrayPointer].Phone;
         document.getElementById("oneExperience").innerHTML = "Experience: " + myWalkers[arrayPointer].Experience;
         document.getElementById("oneDays").innerHTML = "Days available: " + myWalkers[arrayPointer].Days + ".";
+        FillArrayFromServer();
     });
  
 // end of page before show code *************************************************************************
@@ -189,10 +191,17 @@ function createList() {
 };
 
 function deleteWalker(which) {
-    console.log(which);
-    let arrayPointer = GetArrayPointer(which);
-    myWalkers.splice(arrayPointer, 1);  // remove 1 element at index 
-}
+    fetch('deleteWalker/' + which , {
+           method: 'DELETE'
+       })  
+       // now wait for promise, saying server was happy with request or not
+       .then(function (theResonsePromiseDel) {
+        console.log(theResonsePromiseDel), 
+        document.location.href = "index.html#ListAll" })
+       .catch(function (err) {
+           alert(err);
+        });      
+};
 
 // cycles thru the array to find the array element with a matching ID
 function GetArrayPointer(localID) {
@@ -204,25 +213,53 @@ function GetArrayPointer(localID) {
 }
 
 
-/**
- *  https://ourcodeworld.com/articles/read/764/how-to-sort-alphabetically-an-array-of-objects-by-key-in-javascript
-* Function to sort alphabetically an array of objects by some specific key.
-* 
-* @param {String} property Key of the object to sort.
-*/
-function dynamicSort(property) {
-    var sortOrder = 1;
+function FillArrayFromServer(){
+    // using fetch call to communicate with node server to get all data
+    fetch('/ListAll')
+    .then(function (theResonsePromise) {  // wait for reply.  Note this one uses a normal function, not an => function
+        return theResonsePromise.json();
+    })
+    .then(function (serverData) { // now wait for the 2nd promise, which is when data has finished being returned to client
+    console.log(serverData);
+    myWalkers.length = 0;  // clear array
+    myWalkers = serverData;   // use our server json data which matches our objects in the array perfectly
+    createList();  // placing this here will make it wait for data from server to be complete before re-doing the list
+    })
+    .catch(function (err) {
+     console.log(err);
+    });
+};
 
-    if (property[0] === "-") {
-        sortOrder = -1;
-        property = property.substr(1);
-    }
+// using fetch to push an object up to server
+function addNewWalker(newWalker){
+    // the required post body data is our walker object passed into this function
+        
+        // create request object
+        const request = new Request('/addWalker', {
+            method: 'POST',
+            body: JSON.stringify(newWalker),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        });
+        
+      // use that request object we just created for our fetch() call
+      fetch(request)
+      // wait for frist server promise response of "200" success 
+      // (can name these returned promise objects anything you like)
+         .then(function (theResonsePromise) {    // the .json sets up 2nd promise
+          return theResonsePromise.json()  })
+       // now wait for the 2nd promise, which is when data has finished being returned to client
+          .then(function (theResonsePromiseJson) { 
+            console.log(theResonsePromiseJson.toString()), 
+            document.location.href = "#ListAll" 
+            })
+      // the client console log will write out the message I added to the Repsonse on the server
+      .catch(function (err) {
+          console.log(err);
+      });
+    
+        
+    }; // end of addNewWalker
+    
 
-    return function (a, b) {
-        if (sortOrder == -1) {
-            return b[property].localeCompare(a[property]);
-        } else {
-            return a[property].localeCompare(b[property]);
-        }
-    }
-}
