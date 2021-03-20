@@ -1,10 +1,11 @@
+
 h1 {
   color: white;
-  font-size: 48px;
+  font-size: xx-large;
 }
 
 li {
-  color: rgb(12, 145, 78);
+  color: rgb(51, 206, 12);
   font-size:      36px;
   font-weight:    bold;
 }
@@ -18,7 +19,7 @@ li {
 
 .newFont {
   text-align: center;
-  font-family: 'Nova Flat';font-size: 22px;
+  font-family: 'Nova Flat';
   font-size:      40px;
   font-weight:    bold;
 }
@@ -28,6 +29,12 @@ li {
   margin-left: auto;
   margin-right: auto;
   width: 25%;
+}
+.header{
+  font-size: 52px;
+}
+h2{
+font-size: 36px;
 }
 
 
